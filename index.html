@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cagnotte GR20 — 25 ans 🎉</title>
+  <meta name="description" content="On offre le GR20 pour ses 25 ans — participation libre, sans objectif chiffré." />
+  <meta name="theme-color" content="#111827" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg:#0b1020; --fg:#ecf2ff; --muted:#b6c3ff; --primary:#7c9cff; --primary-2:#6de0ff;
+      --card:rgba(255,255,255,.08); --stroke:rgba(255,255,255,.12); --shadow:0 20px 60px rgba(0,0,0,.35);
+      --radius:18px; --maxw:960px; --space:clamp(14px,2.2vw,20px);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{min-height:100%;display:flex;flex-direction:column}
+    body{flex:1;display:flex;flex-direction:column;font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--fg);
+      background:radial-gradient(1200px 600px at 70% -10%,rgba(124,156,255,.25),transparent 60%),
+                 radial-gradient(900px 400px at 20% 10%,rgba(109,224,255,.22),transparent 60%),
+                 linear-gradient(180deg,#0d1428 0%,#0b1020 100%);
+      -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
+    }
+    main{flex:1}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+    .wrap{width:min(100%,var(--maxw));margin:0 auto;padding:calc(var(--space)*1.2)}
+
+    /* Header sticky */
+    header{position:sticky;top:0;z-index:9999;backdrop-filter:saturate(140%) blur(10px);
+      background:linear-gradient(180deg,rgba(11,16,32,.92),rgba(11,16,32,.65));border-bottom:1px solid var(--stroke)}
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:var(--space)}
+    .brand{display:flex;align-items:center;gap:.65rem;font-weight:800;letter-spacing:.2px}
+    .brand .logo{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--primary),var(--primary-2));
+      box-shadow:var(--shadow);display:grid;place-items:center;color:#0b1020;font-size:16px;font-weight:900}
+    .btn{--padx:18px;--pady:12px;display:inline-flex;align-items:center;justify-content:center;gap:.6rem;padding:var(--pady) var(--padx);
+      border-radius:999px;border:1px solid var(--stroke);background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.04));
+      color:var(--fg);font-weight:700;letter-spacing:.2px;box-shadow:0 6px 20px rgba(0,0,0,.25)}
+    .btn.primary{background:linear-gradient(180deg,var(--primary),var(--primary-2));color:#071225;border-color:transparent}
+    .btn.ghost{background:transparent}
+
+    /* Hero */
+    .hero{display:grid;gap:calc(var(--space)*1.2);align-items:center;padding-block:clamp(24px,6vh,10px)}
+    .title{font-size:clamp(28px,5.8vw,56px);line-height:1.05;margin:0;font-weight:800;letter-spacing:-.02em}
+    .subtitle{margin:.6rem 0 20px;color:var(--muted);font-size:clamp(16px,2.8vw,18px)}
+
+    .hero-card{margin-top:20px;display:grid;gap:var(--space);background:var(--card);border:1px solid var(--stroke);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+    .hero-media{aspect-ratio:16/9;background:#0e162d;position:relative}
+    .hero-media img{width:100%;height:100%;object-fit:cover;object-position:center}
+    .media-note{position:absolute;bottom:10px;left:10px;background:rgba(0,0,0,.55);padding:6px 10px;border-radius:10px;font-size:12px;color:#dbe7ff}
+
+    .card-body{display:grid;gap:var(--space);padding:calc(var(--space)*1.1)}
+
+    .quote{border-left:3px solid var(--primary);padding-left:12px;color:var(--muted);line-height:1.6}
+
+    .sec{padding-block:clamp(8px,6vh,5px)}
+    .grid{display:grid;gap:var(--space)}
+    .info{display:grid;gap:12px;background:var(--card);border:1px solid var(--stroke);border-radius:var(--radius);padding:calc(var(--space)*1.1)}
+    .info h3{margin:0;font-size:clamp(18px,2.8vw,22px)}
+    .info p{margin:0;color:var(--muted);line-height:1.6}
+
+    footer{color:#aab6ff;border-top:1px solid var(--stroke);padding-block:18px;margin-top:auto;background:#0b1020}
+    footer .wrap{display:grid;gap:10px}
+
+    /* ===== Modal (mobile-first: bottom sheet) ===== */
+    .modal{position:fixed;inset:0;display:none;background:rgba(0,0,0,.45);backdrop-filter:blur(2px);z-index:10000}
+    .modal.open{display:grid;place-items:end}
+    .sheet{width:100%;background:linear-gradient(180deg,rgba(13,20,40,.98),rgba(13,20,40,.96));border-top-left-radius:20px;border-top-right-radius:20px;border:1px solid var(--stroke);
+      box-shadow:var(--shadow);padding:18px 16px calc(18px + env(safe-area-inset-bottom));}
+    .grabber{width:40px;height:5px;background:rgba(255,255,255,.25);border-radius:999px;margin:6px auto 14px}
+    .sheet h3{margin:0 0 6px;font-size:18px}
+    .sheet p{margin:0 0 12px;color:var(--muted)}
+    .options{display:grid;gap:12px}
+    .option{display:grid;gap:8px;padding:12px;border:1px solid var(--stroke);border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02))}
+    .option .row{display:flex;align-items:center;justify-content:space-between;gap:8px}
+    .copy{font-size:12px;padding:6px 10px;border-radius:999px;border:1px solid var(--stroke);background:rgba(255,255,255,.06);color:#d8e2ff;cursor:pointer}
+    .divider{display:flex;align-items:center;gap:10px;color:#aab6ff;opacity:.8;font-size:12px}
+    .divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--stroke)}
+
+    @media (min-width:680px){
+      .modal.open{place-items:center}
+      .sheet{width:min(92%,520px);border-radius:20px;padding:20px}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+      <div class="brand">
+        <div class="logo" aria-hidden="true">⛰️</div>
+        <span>GR20 — 25 ans</span>
+      </div>
+      <div>
+        <a class="btn primary" href="#" id="donateTop">Contribuer</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="wrap hero">
+      <div>
+        <h1 class="title">On lui offre le <span style="background:linear-gradient(90deg,var(--primary),var(--primary-2));-webkit-background-clip:text;background-clip:text;color:transparent">GR20</span> pour ses 25 ans 🎉</h1>
+        <p class="subtitle">Participation libre : chaque geste compte pour lui offrir une aventure inoubliable en Corse.</p>
+
+        <div class="hero-card">
+          <div class="hero-media">
+            <img src="assets/images/background.jpeg" alt="Photo de randonnée — image à remplacer par sa photo" />
+          </div>
+          <div class="card-body">
+            <p class="quote">Pas d'objectif chiffré : participez si vous le souhaitez, à votre mesure.</p>
+            <p>
+              <a class="btn primary" href="#" id="donateMain">Contribuer maintenant</a>
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <aside class="sec">
+        <div class="grid">
+          <div class="info">
+            <h3>Pourquoi ce cadeau ?</h3>
+            <p>Aurélia aimerait vraiment réaliser le GR20. Votre participation, même modeste, l'aidera pour les refuges et le matériel.</p>
+          </div>
+          <div class="info">
+            <h3>Comment ça marche ?</h3>
+            <p>En cliquant sur « Contribuer », vous pourrez payer par carte bancaire via Stripe, ou bien faire un virement classique à Arthur (l'organisateur).</p>
+          </div>
+          <div class="info">
+            <h3>Envie de laisser un mot ?</h3>
+            <p>Il y aura une carte le jour même pour écrire un petit mot ✍️</p>
+          </div>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <!-- Popup paiement (mobile: bottom sheet) -->
+  <div class="modal" id="payModal" aria-hidden="true" role="dialog" aria-label="Choisir un mode de contribution">
+    <div class="sheet" role="document">
+      <div class="grabber" aria-hidden="true"></div>
+      <h3>Contribuer</h3>
+      <p>Choisissez votre mode de contribution :</p>
+
+      <div class="options">
+        <div class="option">
+          <div class="row">
+            <strong>Par carte bancaire</strong>
+            <a class="btn primary" href="https://buy.stripe.com/cNicN53Ef42H14E5co9IQ03" target="_blank" rel="noopener">Contribuer</a>
+          </div>
+        </div>
+
+        <div class="divider">ou</div>
+
+        <div class="option">
+          <strong>Virement bancaire à Arthur</strong>
+          <div class="row"><span>IBAN : <code id="iban">FR76 1444 5202 0004 1327 3198 159</code></span></div>
+          <div class="row"><span>BIC : <code id="bic">CEPAFRPP444</code></span></div>
+          <div class="row"><span>Bénéficiaire : <code id="name">Arthur André</code></span></div>
+          <div class="row"><span>Référence : <code id="ref">Cagnotte Aurélia GR20</code></span></div>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:14px">
+        <button class="btn ghost" id="closeModal">Fermer</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="wrap">
+      <small>Besoin d'aide ? Contacter Arthur directement.</small>
+      <small>Merci pour votre aide ! Cette page est une cagnotte simple et indépendante.</small>
+    </div>
+  </footer>
+
+  <script>
+    const modal = document.getElementById('payModal');
+    const openers = [document.getElementById('donateTop'), document.getElementById('donateMain')].filter(Boolean);
+    const closeBtn = document.getElementById('closeModal');
+
+    const openModal = (e) => { e?.preventDefault(); modal.classList.add('open'); modal.setAttribute('aria-hidden', 'false'); document.body.style.overflow='hidden'; };
+    const closeModal = () => { modal.classList.remove('open'); modal.setAttribute('aria-hidden', 'true'); document.body.style.overflow=''; };
+
+    openers.forEach(btn => btn.addEventListener('click', openModal));
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => { if(e.target === modal) closeModal(); });
+    window.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeModal(); });
+  </script>
+</body>
+</html>
